@@ -4,6 +4,18 @@ import gc, sys
 # Add script directory to path for local imports
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 # Import shared utilities from ComparaisonFaceMap — avoids code duplication
+from path_for_expe_facemap import MICE, MOUSE_COLORS
+
+
+# ── HOW TO ADD A NEW MOUSE ────────────────────────────────────────────────────
+# 1. Add mouse to MICE and MOUSE_COLORS in path_for_expe_facemap.py
+# 2. If the mouse has videos processed with AND without corneal mask:
+#    Add pairs to MASK_PAIRS in ComparaisonFaceMap.py:
+#    ('KXXXX', 'FDDMMYYYY_Condition',
+#     'KXXXX/path/to/VF1/without_mask_FacemapPose.pkl',
+#     'KXXXX_Corneal_mask_files/date condition/with_mask/with_mask_FacemapPose.pkl')
+# 3. Re-run MaskVSnomask.py to regenerate all mask comparison figures
+# ─────────────────────────────────────────────────────────────────────────────
 from ComparaisonFaceMap import (extract_signals, session_median, compute_median_iqr,
                                  bin_signal, SIGNAL_KEYS, SIGNAL_LABELS, MASK_PAIRS, NAS_BASE,
                                  compute_stats, apply_fdr_correction, add_stats_to_ax)
@@ -284,7 +296,7 @@ def get_date_key(sn):
 
 all_mice = list(set([p[0] for p in pair_paths]))
 
-for mouse in sorted(all_mice):
+for mouse in [m for m in MICE if m in all_mice]:
     mouse_pairs = [(m, sn, np_path, mp_path) for m, sn, np_path, mp_path in pair_paths if m == mouse]
 
     # Index pre-injection pairs by date for this mouse

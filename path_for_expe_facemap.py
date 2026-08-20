@@ -27,7 +27,31 @@ For new sessions with Pre-injection + Injection in the same video:
      - *_Injection_post_processing_FacemapPose.pkl → Injection_Ivabradine_10mgkg
   4. Add the session to BOTH conditions in EXPERIMENTS.
 
-=== BASE ===
+
+=== HOW TO ADD A NEW MOUSE ===
+1. Add the mouse ID to MICE list:
+     MICE = ['K1690', 'K1711', 'K1712', 'KXXXX']
+
+2. Add a unique color to MOUSE_COLORS:
+     MOUSE_COLORS = {
+         ...
+         'KXXXX': '#hex_color',
+     }
+
+3. Add its sessions to EXPERIMENTS (see HOW TO ADD A NEW SESSION above)
+
+That's it — the mouse will automatically appear in all figures and analyses.
+
+# ── Mouse registry ─────────────────────────────────────────────────────────────
+# Add new mice here — propagates automatically to all figures and analyses
+# Also add the mouse to EXPERIMENTS above with its sessions
+MICE = ['K1690', 'K1711', 'K1712']
+MOUSE_COLORS = {
+    'K1690': '#e74c3c',
+    'K1711': '#2ecc71',
+    'K1712': '#3498db',
+}
+
 BASE = '/media/nas8-2/ProjectCardioSense'
 All paths are relative to this BASE.
 
@@ -43,6 +67,18 @@ import pickle
 import numpy as np
 
 # Base path for all data on NAS — all session paths in EXPERIMENTS are relative to this
+
+# ── Mouse registry ─────────────────────────────────────────────────────────────
+# Add new mice here — propagates automatically to all figures and analyses
+# Also add the mouse to EXPERIMENTS above with its sessions
+MICE = ['K1690', 'K1711', 'K1712', 'K2010']
+MOUSE_COLORS = {
+    'K1690': '#e74c3c',
+    'K1711': '#2ecc71',
+    'K1712': '#3498db',
+    'K2010': '#f1c40f',
+}
+
 BASE = '/media/nas8-2/ProjectCardioSense'
 
 # ── Experiment definitions ──────────────────────────────────────────────────

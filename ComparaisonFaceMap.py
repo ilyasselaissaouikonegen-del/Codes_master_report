@@ -27,7 +27,7 @@ from scipy import stats
 
 # Add script directory to path for local imports
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__))) 
-from path_for_expe_facemap import get_facemap_data, EXPERIMENTS #calls the dict EXPERIMENTS formed by get_facemap_data.py that compiles all the paths to the latest .pkl
+from path_for_expe_facemap import get_facemap_data, EXPERIMENTS, MICE, MOUSE_COLORS #calls the dict EXPERIMENTS formed by get_facemap_data.py that compiles all the paths to the latest .pkl
 
 from datetime import datetime
 
@@ -68,7 +68,7 @@ def _init_output_dirs():
         os.makedirs(d, exist_ok=True)
 
 # ── Colors ──────────────────────────────────────────────────────────────────
-MOUSE_COLORS = {'K1690': '#e74c3c', 'K1711': '#2ecc71', 'K1712': '#3498db'}
+# MOUSE_COLORS imported from path_for_expe_facemap
 CONDITION_COLORS = {
     'Basal_Pre_Injection':         '#95a5a6',
     'Injection_Saline':            '#3498db',
@@ -1000,7 +1000,7 @@ def plot_pre_vs_test(all_data, output_dir):
 
     print(f'\n{len(pairs)} Pre/Test pairs found')
 
-    for mouse in ['K1690', 'K1711', 'K1712']:
+    for mouse in MICE:
         mouse_pairs = [(pre, test, cond) for pre, test, cond in pairs if pre['mouse'] == mouse]
         if not mouse_pairs:
             continue
@@ -1167,7 +1167,7 @@ def plot_saline_vs_ivabradine(all_data, output_dir):
 
     out_dir = output_dir
 
-    for mouse in ['K1690', 'K1711', 'K1712']:
+    for mouse in MICE:
         saline_sessions = [s for s in all_data['Injection_Saline'] if s['mouse'] == mouse]
         iva5_sessions   = [s for s in all_data['Injection_Ivabradine_5mgkg'] if s['mouse'] == mouse]
         iva10_sessions  = [s for s in all_data['Injection_Ivabradine_10mgkg'] if s['mouse'] == mouse]
@@ -1947,7 +1947,7 @@ def plot_ratio_raw_vs_postprocessed(all_data, output_dir):
     n_conditions = len(test_conditions)
 
     # ── Per mouse figures ────────────────────────────────────────────────────
-    for mouse in ['K1690', 'K1711', 'K1712']:
+    for mouse in MICE:
         sessions_mouse = {c: [s for s in all_data[c] if s['mouse'] == mouse]
                          for c in all_data}
         sessions_mouse['Basal_Pre_Injection'] = [s for s in all_data['Basal_Pre_Injection']
